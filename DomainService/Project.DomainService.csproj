@@ -166,6 +166,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adds\Entities\Movement.cs" />
+    <Compile Include="Adds\Entities\Order.cs" />
+    <Compile Include="Adds\Entities\OrderItem.cs" />
+    <Compile Include="Adds\Entities\Product.cs" />
+    <Compile Include="Adds\Entities\Supplier.cs" />
+    <Compile Include="Adds\Entities\User.cs" />
+    <Compile Include="Adds\Entities\Warehouse.cs" />
+    <Compile Include="DbContext\MyProjectDbContext.cs" />
     <Compile Include="Impl\Movement\MovementService.svc.cs" />
     <Compile Include="Impl\Order\OrderService.svc.cs" />
     <Compile Include="Impl\Product\ProductService.svc.cs" />
@@ -190,9 +198,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Adds\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DbContext\piris_domain_db.Context.tt">
