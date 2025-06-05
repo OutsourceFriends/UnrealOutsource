@@ -1,0 +1,107 @@
+using System.Collections.Generic;
+using System.Linq;
+using MyProject.DomainService.Objects;
+
+namespace MyProject.DomainService.Impl
+{
+    public class ProductService : IProductService
+    {
+        public List<ProductDto> GetAllProducts()
+        {
+            using (var ctx = new Myproject_dbEntities())
+            {
+                return ctx.products
+                          .Select(p => new ProductDto
+                          {
+                              Id = p.Id,
+                              Name = p.Name,
+                              SKU = p.SKU,
+                              WarehouseId = p.WarehouseId,
+                              Quantity = p.Quantity
+                          })
+                          .ToList();
+            }
+        }
+
+        public ProductDto GetProductById(int id)
+        {
+            using (var ctx = new Myproject_dbEntities())
+            {
+                var p = ctx.products.Find(id);
+                if (p == null) return null;
+                return new ProductDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    SKU = p.SKU,
+                    WarehouseId = p.WarehouseId,
+                    Quantity = p.Quantity
+                };
+            }
+        }
+
+        public bool CreateProduct(ProductDto prod)
+        {
+            using (var ctx = new Myproject_dbEntities())
+            {
+                if (ctx.products.Any(x => x.SKU == prod.SKU))
+                    return false;
+                var entity = new product
+                {
+                    Name = prod.Name,
+                    SKU = prod.SKU,
+                    WarehouseId = prod.WarehouseId,
+                    Quantity = prod.Quantity
+                };
+                ctx.products.Add(entity);
+                ctx.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool UpdateProduct(ProductDto prod)
+        {
+            using (var ctx = new Myproject_dbEntities())
+            {
+                var entity = ctx.products.Find(prod.Id);
+                if (entity == null) return false;
+                entity.Name = prod.Name;
+                entity.SKU = prod.SKU;
+                entity.WarehouseId = prod.WarehouseId;
+                entity.Quantity = prod.Quantity;
+                ctx.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool DeleteProduct(int id)
+        {
+            using (var ctx = new Myproject_dbEntities())
+            {
+                var entity = ctx.products.Find(id);
+                if (entity == null) return false;
+                ctx.products.Remove(entity);
+                ctx.SaveChanges();
+                return true;
+            }
+        }
+
+        public List<ProductDto> GetProductsByWarehouse(int warehouseId)
+        {
+            using (var ctx = new Myproject_dbEntities())
+            {
+                return ctx.products
+                          .Where(p => p.WarehouseId == warehouseId)
+                          .Select(p => new ProductDto
+                          {
+                              Id = p.Id,
+                              Name = p.Name,
+                              SKU = p.SKU,
+                              WarehouseId = p.WarehouseId,
+                              Quantity = p.Quantity
+                          })
+                          .ToList();
+            }
+        }
+    }
+}

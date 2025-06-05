@@ -1,0 +1,27 @@
+<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ output extension=".cs"#>
+<#
+  const string inputFile = @"piris_domain_db.edmx";
+  var textTransform = DynamicTextTransformation.Create(this);
+  var code = new CodeGenerationTools(this);
+  var ef = new MetadataTools(this);
+  var loader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
+  var itemCollection = loader.CreateEdmItemCollection(inputFile);
+  var codeStringGenerator = new CodeStringGenerator(textTransform);
+#>
+namespace piris.DomainService.DbContext
+{
+    public partial class store_positions
+    {
+        public int Id { get; set; }
+        public string positionName { get; set; }
+    }
+
+    public partial class store_users
+    {
+        public int Id { get; set; }
+        public string userName { get; set; }
+        public string userPassword { get; set; }
+    }
+}

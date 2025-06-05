@@ -1,0 +1,33 @@
+<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF6.Utility.CS.ttinclude"#>
+<#@ output extension=".cs"#>
+<#
+  const string inputFile = @"piris_domain_db.edmx";
+  var textTransform = DynamicTextTransformation.Create(this);
+  var code = new CodeGenerationTools(this);
+  var ef = new MetadataTools(this);
+  var loader = new EdmMetadataLoader(textTransform.Host, textTransform.Errors);
+  var itemCollection = loader.CreateEdmItemCollection(inputFile);
+  var codeStringGenerator = new CodeStringGenerator(textTransform);
+#>
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+
+namespace piris.DomainService.DbContext
+{
+    public partial class piris_domain_dbEntities : DbContext
+    {
+        public piris_domain_dbEntities()
+            : base("name=piris_domain_dbEntities")
+        {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+
+        public virtual DbSet<store_positions> store_positions { get; set; }
+        public virtual DbSet<store_users> store_users { get; set; }
+    }
+}
