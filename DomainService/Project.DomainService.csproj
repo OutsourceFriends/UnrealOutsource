@@ -166,15 +166,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\Movement\MovementService.svc.cs" />
+    <Compile Include="Impl\Order\OrderService.svc.cs" />
     <Compile Include="Impl\Product\ProductService.svc.cs" />
+    <Compile Include="Impl\Supplier\SupplierService.svc.cs" />
     <Compile Include="Impl\User\UserService.svc.cs" />
     <Compile Include="Impl\Warehouse\WarehouseService.svc.cs" />
+    <Compile Include="Objects\DTOs\MovementDto.cs" />
+    <Compile Include="Objects\DTOs\OrderDto.cs" />
+    <Compile Include="Objects\DTOs\OrderItemDto.cs" />
     <Compile Include="Objects\DTOs\ProductDto.cs" />
+    <Compile Include="Objects\DTOs\SupplierDto.cs" />
     <Compile Include="Objects\DTOs\UserDto.cs" />
     <Compile Include="Objects\DTOs\WarehouseDto.cs" />
-    <Compile Include="Objects\IProductService.cs" />
-    <Compile Include="Objects\IUserService.cs" />
-    <Compile Include="Objects\IWarehouseService.cs" />
+    <Compile Include="Objects\Services\IMovementService.cs" />
+    <Compile Include="Objects\Services\IOrderService.cs" />
+    <Compile Include="Objects\Services\IProductService.cs" />
+    <Compile Include="Objects\Services\ISupplierService.cs" />
+    <Compile Include="Objects\Services\IUserService.cs" />
+    <Compile Include="Objects\Services\IWarehouseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +200,11 @@
     </Content>
     <Content Include="DbContext\piris_domain_db.edmx" />
     <Content Include="DbContext\piris_domain_db.tt" />
+    <Content Include="docker-compose.yml" />
+    <Content Include="Impl\Movement\MovementService.svc" />
+    <Content Include="Impl\Order\OrderService.svc" />
     <Content Include="Impl\Product\ProductService.svc" />
+    <Content Include="Impl\Supplier\SupplierService.svc" />
     <Content Include="Impl\User\UserService.svc" />
     <Content Include="Impl\Warehouse\WarehouseService.svc" />
   </ItemGroup>

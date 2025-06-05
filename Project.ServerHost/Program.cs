@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ServiceModel;
-using MyProject.DomainService.Impl;
-using MyProject.DomainService;
+using MyProject.DomainService.Impl;     // реализации ваших сервисов
+using MyProject.DomainService.Contracts; // контракты (для справки)
 
-namespace Project.ServerHost
+namespace MyProject.ServerHost
 {
     internal class Program
     {
@@ -12,43 +12,69 @@ namespace Project.ServerHost
             do
             {
                 Console.WriteLine(message);
-            } 
+            }
             while (Console.ReadKey().Key != key);
         }
 
         static void Main(string[] args)
         {
             const string serviceAddress = "127.0.0.1:8080";
-            var binding = new NetTcpBinding(SecurityMode.None);
+            var binding = new NetTcpBinding(SecurityMode.None)
+            {
+                // Здесь можно настроить BufferSize, Timeouts и т. д.
+            };
 
-            // UserService
+            // 1) UserService
             var userHost = new ServiceHost(typeof(UserService), new Uri($"net.tcp://{serviceAddress}/UserService"));
             userHost.AddServiceEndpoint(typeof(IUserService), binding, "");
-            Console.WriteLine($"UserService hosted at net.tcp://{serviceAddress}/UserService");
+            Console.WriteLine($"[Host] UserService запущен по адресу net.tcp://{serviceAddress}/UserService");
 
-            // WarehouseService
+            // 2) WarehouseService
             var whHost = new ServiceHost(typeof(WarehouseService), new Uri($"net.tcp://{serviceAddress}/WarehouseService"));
             whHost.AddServiceEndpoint(typeof(IWarehouseService), binding, "");
-            Console.WriteLine($"WarehouseService hosted at net.tcp://{serviceAddress}/WarehouseService");
+            Console.WriteLine($"[Host] WarehouseService запущен по адресу net.tcp://{serviceAddress}/WarehouseService");
 
-            // ProductService
+            // 3) ProductService
             var prodHost = new ServiceHost(typeof(ProductService), new Uri($"net.tcp://{serviceAddress}/ProductService"));
             prodHost.AddServiceEndpoint(typeof(IProductService), binding, "");
-            Console.WriteLine($"ProductService hosted at net.tcp://{serviceAddress}/ProductService");
+            Console.WriteLine($"[Host] ProductService запущен по адресу net.tcp://{serviceAddress}/ProductService");
 
-            // Открываем хосты
+            // 4) MovementService
+            var movHost = new ServiceHost(typeof(MovementService), new Uri($"net.tcp://{serviceAddress}/MovementService"));
+            movHost.AddServiceEndpoint(typeof(IMovementService), binding, "");
+            Console.WriteLine($"[Host] MovementService запущен по адресу net.tcp://{serviceAddress}/MovementService");
+
+            // 5) SupplierService
+            var supHost = new ServiceHost(typeof(SupplierService), new Uri($"net.tcp://{serviceAddress}/SupplierService"));
+            supHost.AddServiceEndpoint(typeof(ISupplierService), binding, "");
+            Console.WriteLine($"[Host] SupplierService запущен по адресу net.tcp://{serviceAddress}/SupplierService");
+
+            // 6) OrderService
+            var orderHost = new ServiceHost(typeof(OrderService), new Uri($"net.tcp://{serviceAddress}/OrderService"));
+            orderHost.AddServiceEndpoint(typeof(IOrderService), binding, "");
+            Console.WriteLine($"[Host] OrderService запущен по адресу net.tcp://{serviceAddress}/OrderService");
+
+            // Открываем все хосты
             userHost.Open();
             whHost.Open();
             prodHost.Open();
-            Console.WriteLine("Все службы запущены. Ожидаем нажатия ENTER для завершения.");
+            movHost.Open();
+            supHost.Open();
+            orderHost.Open();
 
-            WaitKey("Нажмите ENTER для остановки всех хостов...", ConsoleKey.Enter);
+            Console.WriteLine("[Host] Все службы успешно запущены. Нажмите ENTER, чтобы завершить работу.");
+
+            WaitKey("Нажмите ENTER для остановки хостов...", ConsoleKey.Enter);
 
             // Закрываем хосты
             userHost.Close();
             whHost.Close();
             prodHost.Close();
-            Console.WriteLine("Все хосты остановлены. Выход.");
+            movHost.Close();
+            supHost.Close();
+            orderHost.Close();
+
+            Console.WriteLine("[Host] Все хосты остановлены. Завершение.");
         }
     }
 }
