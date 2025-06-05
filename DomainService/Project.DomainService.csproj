@@ -176,9 +176,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adds\" />
-    <Folder Include="DbContext\" />
     <Folder Include="Impl\" />
     <Folder Include="Objects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbContext\piris_domain_db.Context.tt" />
+    <Content Include="DbContext\piris_domain_db.edmx" />
+    <Content Include="DbContext\piris_domain_db.tt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
