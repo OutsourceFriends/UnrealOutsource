@@ -1,1 +1,1 @@
-<%@ ServiceHost Language="C#" Debug="true" Service="MyProject.DomainService.Impl.MovementService" %>
+<%@ ServiceHost Language="C#" Debug="true" Service="DomainService.Impl.Movement.MovementService" %>

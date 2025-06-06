@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
-using MyProject.DomainService.Objects;
+using DomainService.DbContext;
+using DomainService.Objects.DTOs;
+using DomainService.Objects.Services;
 
-namespace MyProject.DomainService.Impl
+namespace DomainService.Impl.Warehouse
 {
     public class WarehouseService : IWarehouseService
     {
         public List<WarehouseDto> GetAllWarehouses()
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                return ctx.warehouses
+                return ctx.Warehouses
                           .Select(w => new WarehouseDto
                           {
                               Id = w.Id,
@@ -23,9 +25,9 @@ namespace MyProject.DomainService.Impl
 
         public WarehouseDto GetWarehouseById(int id)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var w = ctx.warehouses.Find(id);
+                var w = ctx.Warehouses.Find(id);
                 if (w == null) return null;
                 return new WarehouseDto { Id = w.Id, Name = w.Name, Location = w.Location };
             }
@@ -33,16 +35,16 @@ namespace MyProject.DomainService.Impl
 
         public bool CreateWarehouse(WarehouseDto wh)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                if (ctx.warehouses.Any(x => x.Name == wh.Name))
+                if (ctx.Warehouses.Any(x => x.Name == wh.Name))
                     return false;
-                var entity = new warehouse
+                var entity = new Adds.Entities.Warehouse
                 {
                     Name = wh.Name,
                     Location = wh.Location
                 };
-                ctx.warehouses.Add(entity);
+                ctx.Warehouses.Add(entity);
                 ctx.SaveChanges();
                 return true;
             }
@@ -50,9 +52,9 @@ namespace MyProject.DomainService.Impl
 
         public bool UpdateWarehouse(WarehouseDto wh)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.warehouses.Find(wh.Id);
+                var entity = ctx.Warehouses.Find(wh.Id);
                 if (entity == null) return false;
                 entity.Name = wh.Name;
                 entity.Location = wh.Location;
@@ -63,11 +65,11 @@ namespace MyProject.DomainService.Impl
 
         public bool DeleteWarehouse(int id)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.warehouses.Find(id);
+                var entity = ctx.Warehouses.Find(id);
                 if (entity == null) return false;
-                ctx.warehouses.Remove(entity);
+                ctx.Warehouses.Remove(entity);
                 ctx.SaveChanges();
                 return true;
             }

@@ -1,11 +1,15 @@
-﻿using System;
-using System.ServiceModel;
-using MyProject.DomainService.Impl;      // Классы-реализации ваших служб
-using MyProject.DomainService.Contracts; // Интерфейсы сервисов
+﻿using System.ServiceModel;
+using DomainService.Impl.Movement;
+using DomainService.Impl.Order;
+using DomainService.Impl.Product;
+using DomainService.Impl.Supplier;
+using DomainService.Impl.User;
+using DomainService.Impl.Warehouse;
+using DomainService.Objects.Services;
 
-namespace MyProject.ServerHost
+namespace Project.ServerHost
 {
-    internal class Program
+    internal static class Program
     {
         private static void WaitKey(string message, ConsoleKey key)
         {

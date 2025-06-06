@@ -1,4 +1,6 @@
-namespace MyProject.DomainService.Objects
+using System;
+
+namespace DomainService.Objects.DTOs
 {
     public class MovementDto
     {

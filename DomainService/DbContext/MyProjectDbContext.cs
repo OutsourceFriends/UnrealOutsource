@@ -1,12 +1,12 @@
 using System.Data.Entity;
-using MyProject.DomainService.Entities;
+using DomainService.Adds.Entities;
 using MySql.Data.EntityFramework;
 
-namespace MyProject.DomainService.Entities
+namespace DomainService.DbContext
 {
     // Атрибут DbConfigurationType указывает EF, что нужно использовать MySQL провайдер
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
-    public class MyProjectDbContext : DbContext
+    public class MyProjectDbContext : System.Data.Entity.DbContext
     {
         public MyProjectDbContext()
             : base("name=MyProjectDbContext")

@@ -1,1 +1,1 @@
-<%@ ServiceHost Language="C#" Debug="true" Service="MyProject.DomainService.Impl.UserService" %>
+<%@ ServiceHost Language="C#" Debug="true" Service="DomainService.Impl.User.UserService" %>

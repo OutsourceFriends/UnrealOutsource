@@ -1,4 +1,7 @@
-namespace MyProject.DomainService.Objects
+using System;
+using System.Collections.Generic;
+
+namespace DomainService.Objects.DTOs
 {
     public class OrderDto
     {

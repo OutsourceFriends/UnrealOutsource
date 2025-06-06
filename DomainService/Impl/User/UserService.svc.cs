@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
-using MyProject.DomainService.Objects;
+using DomainService.DbContext;
+using DomainService.Objects.DTOs.MyProject.DomainService.Objects;
+using DomainService.Objects.Services;
 
-namespace MyProject.DomainService.Impl
+namespace DomainService.Impl.User
 {
     public class UserService : IUserService
     {
         public List<UserDto> GetAllUsers()
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                return ctx.users
+                return ctx.Users
                           .Select(u => new UserDto
                           {
                               Id = u.Id,
@@ -24,9 +26,9 @@ namespace MyProject.DomainService.Impl
 
         public UserDto GetUserById(int id)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var u = ctx.users.Find(id);
+                var u = ctx.Users.Find(id);
                 if (u == null) return null;
                 return new UserDto
                 {
@@ -40,17 +42,17 @@ namespace MyProject.DomainService.Impl
 
         public bool CreateUser(UserDto user)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                if (ctx.users.Any(x => x.UserName == user.UserName))
+                if (ctx.Users.Any(x => x.UserName == user.UserName))
                     return false;
-                var entity = new user
+                var entity = new Adds.Entities.User
                 {
                     UserName = user.UserName,
                     PasswordHash = user.PasswordHash,
                     FullName = user.FullName
                 };
-                ctx.users.Add(entity);
+                ctx.Users.Add(entity);
                 ctx.SaveChanges();
                 return true;
             }
@@ -58,12 +60,12 @@ namespace MyProject.DomainService.Impl
 
         public bool UpdateUser(UserDto user)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.users.Find(user.Id);
+                var entity = ctx.Users.Find(user.Id);
                 if (entity == null) return false;
                 entity.FullName = user.FullName;
-                // По необходимости: change UserName or PasswordHash
+
                 ctx.SaveChanges();
                 return true;
             }
@@ -71,11 +73,11 @@ namespace MyProject.DomainService.Impl
 
         public bool DeleteUser(int id)
         {
-            using (var ctx = new Myproject_dbEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.users.Find(id);
+                var entity = ctx.Users.Find(id);
                 if (entity == null) return false;
-                ctx.users.Remove(entity);
+                ctx.Users.Remove(entity);
                 ctx.SaveChanges();
                 return true;
             }

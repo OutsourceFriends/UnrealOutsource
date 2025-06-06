@@ -1,4 +1,4 @@
-namespace MyProject.DomainService.Objects
+namespace DomainService.Objects.DTOs
 {
     namespace MyProject.DomainService.Objects
     {

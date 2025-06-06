@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
-using MyProject.DomainService.Contracts;   // ISupplierService
-using MyProject.DomainService.Objects;     // SupplierDto
-using MyProject.DomainService.DbContext;    // MyProjectDBEntities
+using DomainService.DbContext;
+using DomainService.Objects.DTOs;
+using DomainService.Objects.Services;
 
-namespace MyProject.DomainService.Impl
+namespace DomainService.Impl.Supplier
 {
     public class SupplierService : ISupplierService
     {
         public List<SupplierDto> GetAllSuppliers()
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                return ctx.suppliers
+                return ctx.Suppliers
                           .Select(s => new SupplierDto
                           {
                               Id = s.Id,
@@ -25,9 +25,9 @@ namespace MyProject.DomainService.Impl
 
         public SupplierDto GetSupplierById(int id)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var s = ctx.suppliers.Find(id);
+                var s = ctx.Suppliers.Find(id);
                 if (s == null) return null;
                 return new SupplierDto
                 {
@@ -40,16 +40,16 @@ namespace MyProject.DomainService.Impl
 
         public bool CreateSupplier(SupplierDto sup)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                if (ctx.suppliers.Any(x => x.Name == sup.Name))
+                if (ctx.Suppliers.Any(x => x.Name == sup.Name))
                     return false;
-                var entity = new supplier
+                var entity = new Adds.Entities.Supplier
                 {
                     Name = sup.Name,
                     ContactInfo = sup.ContactInfo
                 };
-                ctx.suppliers.Add(entity);
+                ctx.Suppliers.Add(entity);
                 ctx.SaveChanges();
                 return true;
             }
@@ -57,9 +57,9 @@ namespace MyProject.DomainService.Impl
 
         public bool UpdateSupplier(SupplierDto sup)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.suppliers.Find(sup.Id);
+                var entity = ctx.Suppliers.Find(sup.Id);
                 if (entity == null) return false;
                 entity.Name = sup.Name;
                 entity.ContactInfo = sup.ContactInfo;
@@ -70,11 +70,11 @@ namespace MyProject.DomainService.Impl
 
         public bool DeleteSupplier(int id)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.suppliers.Find(id);
+                var entity = ctx.Suppliers.Find(id);
                 if (entity == null) return false;
-                ctx.suppliers.Remove(entity);
+                ctx.Suppliers.Remove(entity);
                 ctx.SaveChanges();
                 return true;
             }

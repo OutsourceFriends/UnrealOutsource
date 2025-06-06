@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MyProject.DomainService.Contracts;   // IMovementService
-using MyProject.DomainService.Objects;     // MovementDto
-using MyProject.DomainService.DbContext;    // MyProjectDBEntities
+using DomainService.DbContext;
+using DomainService.Objects.DTOs;
+using DomainService.Objects.Services;
 
-namespace MyProject.DomainService.Impl
+namespace DomainService.Impl.Movement
 {
     public class MovementService : IMovementService
     {
         public List<MovementDto> GetAllMovements()
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                return ctx.movements
+                return ctx.Movements
                           .Select(m => new MovementDto
                           {
                               Id = m.Id,
@@ -29,9 +29,9 @@ namespace MyProject.DomainService.Impl
 
         public MovementDto GetMovementById(int id)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var m = ctx.movements.Find(id);
+                var m = ctx.Movements.Find(id);
                 if (m == null) return null;
                 return new MovementDto
                 {
@@ -47,33 +47,27 @@ namespace MyProject.DomainService.Impl
 
         public bool CreateMovement(MovementDto mov)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                // Проверим, что товар существует и на складе FromInventory хватит
-                var prodEntity = ctx.products.Find(mov.ProductId);
+                var prodEntity = ctx.Products.Find(mov.ProductId);
                 if (prodEntity == null)
                     return false;
 
                 if (mov.FromWarehouseId.HasValue && prodEntity.WarehouseId == mov.FromWarehouseId.Value)
                 {
-                    // Проверка наличия на складе
                     if (prodEntity.Quantity < mov.Quantity)
-                        return false; // недостаточно товара
+                        return false; 
 
                     prodEntity.Quantity -= mov.Quantity;
                 }
 
                 if (mov.ToWarehouseId.HasValue && prodEntity.WarehouseId != mov.ToWarehouseId.Value)
                 {
-                    // Если перемещаем в другой склад
-                    // Создадим новый объект (или изменим склад у существующего товара) —
-                    // в упрощённой модели считаем, что один товар может находиться только на одном складе.
-                    // Можно усложнить, разбивая по записям, но для примера:
                     prodEntity.Quantity += mov.Quantity;
                     prodEntity.WarehouseId = mov.ToWarehouseId.Value;
                 }
 
-                var entity = new movement
+                var entity = new Adds.Entities.Movement
                 {
                     ProductId = mov.ProductId,
                     FromWarehouseId = mov.FromWarehouseId,
@@ -81,7 +75,7 @@ namespace MyProject.DomainService.Impl
                     Quantity = mov.Quantity,
                     Date = mov.Date == default(DateTime) ? DateTime.Now : mov.Date
                 };
-                ctx.movements.Add(entity);
+                ctx.Movements.Add(entity);
                 ctx.SaveChanges();
                 return true;
             }
@@ -89,14 +83,10 @@ namespace MyProject.DomainService.Impl
 
         public bool UpdateMovement(MovementDto mov)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.movements.Find(mov.Id);
+                var entity = ctx.Movements.Find(mov.Id);
                 if (entity == null) return false;
-
-                // В реальной задаче корректировка перемещения — сложная операция: 
-                // нужно вернуть товар на старый склад и списать/прибавить на новый. 
-                // Для простоты пропустим логику, просто обновим поля:
                 entity.ProductId = mov.ProductId;
                 entity.FromWarehouseId = mov.FromWarehouseId;
                 entity.ToWarehouseId = mov.ToWarehouseId;
@@ -110,11 +100,11 @@ namespace MyProject.DomainService.Impl
 
         public bool DeleteMovement(int id)
         {
-            using (var ctx = new MyProjectDBEntities())
+            using (var ctx = new MyProjectDbContext())
             {
-                var entity = ctx.movements.Find(id);
+                var entity = ctx.Movements.Find(id);
                 if (entity == null) return false;
-                ctx.movements.Remove(entity);
+                ctx.Movements.Remove(entity);
                 ctx.SaveChanges();
                 return true;
             }

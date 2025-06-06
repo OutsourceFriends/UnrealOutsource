@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.ServiceModel;
-using MyProject.DomainService.Objects;
+using DomainService.Objects.DTOs;
 
-namespace MyProject.DomainService.Contracts
+namespace DomainService.Objects.Services
 {
     [ServiceContract]
     public interface ISupplierService
