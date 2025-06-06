@@ -1,0 +1,55 @@
+﻿<Window x:Class="Sklad_uchet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sklad_uchet"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="781" Width="1158">
+    <Grid Margin="-26,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Rectangle HorizontalAlignment="Left" Height="298" Margin="851,314,0,0" Stroke="Black" VerticalAlignment="Top" Width="315"/>
+
+        <Rectangle HorizontalAlignment="Left" Height="290" Margin="851,24,0,0" Stroke="Black" VerticalAlignment="Top" Width="315"/>
+
+        <Rectangle HorizontalAlignment="Left" Height="198" Margin="48,24,0,0" Stroke="Black" VerticalAlignment="Top" Width="790"/>
+
+        <Rectangle HorizontalAlignment="Left" Height="110" Margin="851,612,0,0" Stroke="Black" VerticalAlignment="Top" Width="315"/>
+
+        <DataGrid x:Name="MainGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="482" Margin="48,240,0,0" VerticalAlignment="Top" Width="790" FontSize="16">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование товара" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" />
+                <DataGridTextColumn Header="Цена за ед." Binding="{Binding Price}" />
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding TotalCost}" />
+                <DataGridTextColumn Header="В резерве" Binding="{Binding Reserved}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <ListBox x:Name="GiveTakeChoice" HorizontalAlignment="Left" Height="88" Margin="68,115,0,0" VerticalAlignment="Top" Width="413" FontSize="16" DisplayMemberPath="Name"/>
+        <TextBox x:Name="GiveTakeQuantity" HorizontalAlignment="Left" Height="49" Margin="493,134,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="186" FontSize="18"/>
+        <Button x:Name="GiveButton" Content="Добавить +" HorizontalAlignment="Left" Height="44" Margin="705,103,0,0" VerticalAlignment="Top" Width="112" Click="GiveButton_Click" FontSize="18"/>
+        <Button x:Name="TakeButton" Content="Убавить -" HorizontalAlignment="Left" Height="44" Margin="705,159,0,0" VerticalAlignment="Top" Width="112" FontSize="18" Click="TakeButton_Click"/>
+        <TextBox x:Name="SumTable" HorizontalAlignment="Left" Height="41" Margin="865,623,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="288" FontSize="22"/>
+        <Button x:Name="SumButton" Content="Сумма товаров" HorizontalAlignment="Left" Height="34" Margin="864,674,0,0" VerticalAlignment="Top" Width="288" FontSize="20" Click="SumButton_Click"/>
+        <Label Content="Поставить в товар в резерв" HorizontalAlignment="Left" Height="37" Margin="868,319,0,0" VerticalAlignment="Top" Width="284" FontSize="20" FontWeight="Bold"/>
+        <ListBox x:Name="ReserveChoice" HorizontalAlignment="Left" Height="76" Margin="867,373,0,0" VerticalAlignment="Top" Width="285" FontSize="18" DisplayMemberPath="Name"/>
+        <TextBox x:Name="ReserveQuantity" HorizontalAlignment="Left" Height="31" Margin="868,496,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="285" FontSize="18"/>
+        <Button x:Name="ReserveGiveButton" Content="В резерв" HorizontalAlignment="Left" Height="51" Margin="868,546,0,0" VerticalAlignment="Top" Width="140" FontSize="20" Click="ReserveGiveButton_Click"/>
+        <Button x:Name="NewProductButton" Content="Добавить" HorizontalAlignment="Left" Height="32" Margin="867,261,0,0" VerticalAlignment="Top" Width="286" FontSize="20" Click="NewProductButton_Click"/>
+        <Label Content="Кол-во товара" HorizontalAlignment="Left" Height="31" Margin="514,88,0,0" VerticalAlignment="Top" Width="144" FontSize="18"/>
+        <Label Content="Добавить новый товар" HorizontalAlignment="Left" Height="43" Margin="867,24,0,0" VerticalAlignment="Top" Width="286" FontSize="22" FontWeight="Bold"/>
+        <TextBox x:Name="NewProductName" HorizontalAlignment="Left" Height="54" Margin="866,113,0,0" TextWrapping="Wrap" Text="Пирожное &quot;Лестница&quot;" VerticalAlignment="Top" Width="286" FontSize="18"/>
+        <Label Content="Наименование товара" HorizontalAlignment="Left" Height="32" Margin="866,76,0,0" VerticalAlignment="Top" Width="286" FontSize="18"/>
+        <Label Content="Цена за ед. товара" HorizontalAlignment="Left" Height="32" Margin="867,172,0,0" VerticalAlignment="Top" Width="286" FontSize="18"/>
+        <TextBox x:Name="NewProductPrice" HorizontalAlignment="Left" Height="38" Margin="866,208,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="286" FontSize="18"/>
+        <Label Content="Вид товара" HorizontalAlignment="Left" Height="32" Margin="68,76,0,0" VerticalAlignment="Top" Width="413" FontSize="18"/>
+        <Label Content="Количество товара" HorizontalAlignment="Left" Height="37" Margin="868,462,0,0" VerticalAlignment="Top" Width="284" FontSize="18"/>
+        <Label Content="Добавить или убавить количество товара" HorizontalAlignment="Left" Height="43" Margin="68,29,0,0" VerticalAlignment="Top" Width="539" FontSize="22" FontWeight="Bold"/>
+        <Button x:Name="ReserveTakeButton" Content="Из резерва" HorizontalAlignment="Left" Height="51" Margin="1013,546,0,0" VerticalAlignment="Top" Width="140" FontSize="20" Click="ReserveTakeButton_Click"/>
+    </Grid>
+</Window>

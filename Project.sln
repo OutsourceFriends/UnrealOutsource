@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.DomainService", "DomainService\Project.DomainService.csproj", "{05B1DA49-2AA4-40F6-80C0-6963FA721AFA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainService", "DomainService\DomainService.csproj", "{05B1DA49-2AA4-40F6-80C0-6963FA721AFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.ServerHost", "Project.ServerHost\Project.ServerHost.csproj", "{AC733A8C-5353-45BB-9284-97BE5C13743C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerHost", "ServerHost\ServerHost.csproj", "{AC733A8C-5353-45BB-9284-97BE5C13743C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseScritps", "DatabaseScritps\DatabaseScritps.csproj", "{F915DBF4-F053-41C7-A5A5-37F4261773D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{4C3F35E1-F78B-4534-B88F-BA7A08005EC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{023709E8-ABAB-4309-87C8-7B17786A4C10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,5 +37,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5AF9E4E9-3807-446F-8169-3F83D7AFF43C}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F915DBF4-F053-41C7-A5A5-37F4261773D1} = {023709E8-ABAB-4309-87C8-7B17786A4C10}
+		{05B1DA49-2AA4-40F6-80C0-6963FA721AFA} = {023709E8-ABAB-4309-87C8-7B17786A4C10}
+		{AC733A8C-5353-45BB-9284-97BE5C13743C} = {023709E8-ABAB-4309-87C8-7B17786A4C10}
 	EndGlobalSection
 EndGlobal

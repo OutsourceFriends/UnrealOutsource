@@ -7,7 +7,7 @@ using DomainService.Impl.User;
 using DomainService.Impl.Warehouse;
 using DomainService.Objects.Services;
 
-namespace Project.ServerHost
+namespace ServerHost
 {
     internal static class Program
     {
